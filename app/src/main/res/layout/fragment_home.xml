@@ -22,8 +22,8 @@
 
     <ImageView
         android:id="@+id/imageCat"
-        android:layout_width="231dp"
-        android:layout_height="245dp"
+        android:layout_width="202dp"
+        android:layout_height="210dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="108dp"
         app:layout_constraintBottom_toTopOf="@+id/count_button"
@@ -62,7 +62,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
+        android:layout_marginStart="124dp"
         android:layout_marginTop="36dp"
         android:text="Satiety:"
         android:textSize="48sp"

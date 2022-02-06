@@ -2,10 +2,6 @@ package com.example.lab1
 
 import android.os.Bundle
 import android.view.Menu
-import android.view.View
-import android.view.animation.*
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -14,10 +10,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.lab1.databinding.ActivityMainBinding
-import com.example.lab1.ui.home.BounceInterpolator
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
-import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_about_dev
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

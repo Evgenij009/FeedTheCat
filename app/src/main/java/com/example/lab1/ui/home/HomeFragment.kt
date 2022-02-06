@@ -1,8 +1,6 @@
 package com.example.lab1.ui.home
 
-import android.R.attr.button
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.lab1.R
 import com.example.lab1.databinding.FragmentHomeBinding
+import kotlin.properties.Delegates
 import kotlin.random.Random
 
 
@@ -31,6 +30,9 @@ class HomeFragment : Fragment() {
     private lateinit var imageCat: ImageView
     private lateinit var btn: Button
     private var lastAngle = -1;
+    companion object {
+        var countCat: Int = 0;
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +45,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
         textView = binding.textView
+        textView.text = countCat.toString()
         imageCat = binding.imageCat
         btn = binding.countButton
         btn.setOnClickListener { view ->
@@ -52,18 +55,15 @@ class HomeFragment : Fragment() {
     }
 
     fun countMe() {
-        val countString = textView.text.toString();
-        var count: Int = Integer.parseInt(countString);
-        count++;
+        countCat++;
 
-
-        if (count % 3 == 0) {
+        if (countCat % 3 == 0) {
             val s = AnimationSet(true)
             s.addAnimation(spinCat())
             s.addAnimation(scalingCat())
             imageCat.startAnimation(s)
         }
-        textView.text = count.toString()
+        textView.text = countCat.toString()
     }
 
     fun spinCat() : Animation {
