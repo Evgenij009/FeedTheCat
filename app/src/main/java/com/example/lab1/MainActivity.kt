@@ -1,5 +1,6 @@
 package com.example.lab1
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
@@ -79,15 +80,14 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onDestroy() {
         super.onDestroy()
-        val date = Calendar.getInstance().time
-        val formatter = SimpleDateFormat("M/d/y H:m:ss")
-        val formattedDate = formatter.format(date)
-        val logStatistic = LogStatistic(HomeFragment.countCat, formattedDate)
-        db.openDb()
-        db.insert(logStatistic)
-        db.closeDb()
+//        val date = Calendar.getInstance().time
+//        val formatter = SimpleDateFormat("M/d/y H:m:ss")
+//        val formattedDate = formatter.format(date)
+//        val logStatistic = LogStatistic(HomeFragment.countCat, formattedDate)
+//        db.openDb()
+//        if (HomeFragment.countCat != 0) db.insert(logStatistic)
+//        db.closeDb()
     }
 }

@@ -1,5 +1,7 @@
 package com.example.lab1.ui.statistic
 
+import android.icu.text.SimpleDateFormat
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +10,9 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.lab1.databinding.FragmentStatisticBinding
+import com.example.lab1.model.LogStatistic
 import com.example.lab1.service.DatabaseManager
+import com.example.lab1.ui.home.HomeFragment
 
 class StatisticFragment : Fragment() {
 
@@ -31,8 +35,21 @@ class StatisticFragment : Fragment() {
 
         val textView: TextView = binding.textStatistic
         val db = DatabaseManager(requireContext().applicationContext)
+        val date = Calendar.getInstance().time
+        val formatter = SimpleDateFormat("M/d/y H:m:ss")
+        val formattedDate = formatter.format(date)
+        val logStatistic = LogStatistic(HomeFragment.countCat, formattedDate)
         db.openDb()
-        textView.text = db.read().reversed().joinToString("\n")
+        if (HomeFragment.countCat != 0) {
+            db.insert(logStatistic)
+            HomeFragment.countCat = 0
+        }
+        val listStat = db.read().reversed();
+        if (listStat.isNotEmpty()) {
+            textView.text = listStat.joinToString("\n")
+        } else {
+            textView.text = "Statistics is empty, feed the cat)"
+        }
         db.closeDb()
 
         return root
@@ -40,6 +57,5 @@ class StatisticFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
     }
 }
