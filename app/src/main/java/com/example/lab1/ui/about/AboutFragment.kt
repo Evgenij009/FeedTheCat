@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.lab1.databinding.FragmentStatisticBinding
+import com.example.lab1.databinding.FragmentAboutDevBinding
 
 class AboutFragment : Fragment() {
 
-    private var _binding: FragmentStatisticBinding? = null
+    private var _binding: FragmentAboutDevBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,10 +25,10 @@ class AboutFragment : Fragment() {
         val galleryViewModel =
             ViewModelProvider(this).get(AboutViewModel::class.java)
 
-        _binding = FragmentStatisticBinding.inflate(inflater, container, false)
+        _binding = FragmentAboutDevBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textGallery
+        val textView: TextView = binding.textAboutDev
         galleryViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }

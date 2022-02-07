@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.lab1.databinding.FragmentSlideshowBinding
+import com.example.lab1.databinding.FragmentStatisticBinding
+import com.example.lab1.service.DatabaseManager
 
 class StatisticFragment : Fragment() {
 
-    private var _binding: FragmentSlideshowBinding? = null
+    private var _binding: FragmentStatisticBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,13 +26,15 @@ class StatisticFragment : Fragment() {
         val slideshowViewModel =
             ViewModelProvider(this).get(StatisticViewModel::class.java)
 
-        _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
+        _binding = FragmentStatisticBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textSlideshow
-        slideshowViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        val textView: TextView = binding.textStatistic
+        val db = DatabaseManager(requireContext().applicationContext)
+        db.openDb()
+        textView.text = db.read().reversed().joinToString("\n")
+        db.closeDb()
+
         return root
     }
 

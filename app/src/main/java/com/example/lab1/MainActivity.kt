@@ -1,8 +1,14 @@
 package com.example.lab1
 
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
+import android.icu.util.Calendar
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
+import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -11,16 +17,20 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.lab1.databinding.ActivityMainBinding
+import com.example.lab1.model.LogStatistic
+import com.example.lab1.service.DatabaseHelper
+import com.example.lab1.service.DatabaseManager
 import com.example.lab1.ui.home.HomeFragment
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
+import java.time.LocalDate
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
-
+    private val db = DatabaseManager(this)
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -31,8 +41,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.appBarMain.btnShare.setOnClickListener { view ->
             shareScore()
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
         }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
@@ -48,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun shareScore() {
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
@@ -68,5 +77,17 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onDestroy() {
+        super.onDestroy()
+        val date = Calendar.getInstance().time
+        val formatter = SimpleDateFormat("M/d/y H:m:ss")
+        val formattedDate = formatter.format(date)
+        val logStatistic = LogStatistic(HomeFragment.countCat, formattedDate)
+        db.openDb()
+        db.insert(logStatistic)
+        db.closeDb()
     }
 }

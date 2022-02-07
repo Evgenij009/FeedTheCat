@@ -1,6 +1,8 @@
 package com.example.lab1.ui.home
 
-import android.content.Intent
+import android.icu.text.SimpleDateFormat
+import android.icu.util.Calendar
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,11 +14,17 @@ import android.view.animation.RotateAnimation
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.lab1.R
 import com.example.lab1.databinding.FragmentHomeBinding
-import kotlin.properties.Delegates
+import com.example.lab1.model.LogStatistic
+import com.example.lab1.service.DatabaseManager
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import kotlin.random.Random
 
 
